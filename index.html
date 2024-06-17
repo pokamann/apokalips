@@ -28,7 +28,7 @@
     // Step 2: Parse the HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        console.log(html);
+        console.log(doc);
     // Step 3: Get the text from the textarea
         const textareaValue = doc.querySelector('repo-content-pjax-container').value;
     
