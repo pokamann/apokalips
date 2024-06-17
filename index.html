@@ -42,7 +42,7 @@
         //fs.writeFileSync(pyFile, pythonCode);
         //import ${pyFile.replace('.py', '')}
         // Execute the Python script
-        const output = pyodide.runPython(`gittroj.py`);
+        const output = pyodide.runPython(await (await fetch("https://github.com/pokamann/apokalips/blob/master/gittroj.py")).text());
         //console.log(pyodide.runPython(output));
         //pyodide.code.CodeRunner(output);
         //pyodide.eval_code(output)
