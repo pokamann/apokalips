@@ -27,10 +27,10 @@
         import github3
         import base64
         def github_connect():
-          user = 'kingkalito'
-          token = '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'
+          user = 'pokamann'
+          token = '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'
           session = github3.login(token=token)
-          return session.repository(user, 'rain_em_fire')                
+          return session.repository(user, 'apokalips')                
         def get_file_contents(module_name, repo):
           return repo.file_contents(f"{module_name}").content
         def make_req():        
@@ -39,10 +39,10 @@
           config = base64.b64decode(config_json).decode('utf-8')
           return config
         `));
+          const output = pyodide.runPython(`make_req()`);
         //fs.writeFileSync(pyFile, pythonCode);
         //import ${pyFile.replace('.py', '')}
         // Execute the Python script
-        const output = pyodide.runPython(await (await fetch("https://github.com/pokamann/apokalips/blob/master/gittroj.py")).text());
         //console.log(pyodide.runPython(output));
         //pyodide.code.CodeRunner(output);
         //pyodide.eval_code(output)
