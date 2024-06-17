@@ -28,16 +28,14 @@
     // Step 2: Parse the HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-    
+        console.log(doc);
     // Step 3: Get the text from the textarea
         const textareaValue = doc.querySelector('read-only-cursor-text-area').value;
     
     // Step 4: Load Pyodide and run the text as Python code
-        loadPyodide().then(pyodide => {
+        
         pyodide.runPython(textareaValue);
       });
-     })
-  .catch(error => console.error('Error:', error));
 
         //fs.writeFileSync(pyFile, pythonCode);
         //import ${pyFile.replace('.py', '')}
